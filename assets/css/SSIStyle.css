@@ -54,7 +54,7 @@ div#header-links ul li { display: inline; vertical-align: middle; }
 
 /* Metadata */
 
-p.submitted { color: #999; }
+p.submitted { color: #999999; }
 
 /* Accessibility */
 .accessible { display: none; color: pink; font-weight: bold; }
@@ -145,6 +145,10 @@ body
 #content > h1
 {
   margin-bottom: 0px;
+}
+
+#submitted{
+  color: #999999;
 }
 
 /* Customised Hyperlink text color to SSI red colour */

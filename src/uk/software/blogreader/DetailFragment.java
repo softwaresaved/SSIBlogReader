@@ -124,7 +124,9 @@ public class DetailFragment extends Fragment {
 			    //sb1.append("<html><head><link href=\"file:///android_asset/css/SSIStyle.css\" type=\"text/css\" rel=\"stylesheet\"/></HEAD><body>");
 			    //sb1.append("<p><img src=fFeed.getItem(fPos).getImage()</p>");
 			    sb1.append(blogs.html());
+			    sb1.append("<font color=#999999>");
 			    sb1.append(writer.text());
+			    sb1.append("</font>");
 			    sb1.append("</body></html>");
 			    //Cross-checking if content is correct or not.
 			    //Checking if htmlString has blogs html data*/
