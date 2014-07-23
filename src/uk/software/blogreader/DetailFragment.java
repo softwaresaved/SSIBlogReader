@@ -1,15 +1,10 @@
 package uk.software.blogreader;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -31,6 +26,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class DetailFragment extends Fragment {
+	
 	private int fPos;
 	RSSFeed fFeed;
 	private static final String TAG = "MyActivity";
@@ -42,13 +38,14 @@ public class DetailFragment extends Fragment {
 	String line = null;
 	StringBuffer sb;
 	WebView desc;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		fFeed = (RSSFeed) getArguments().getSerializable("feed");
 		fPos = getArguments().getInt("pos");
+		
 	}
 
 	@Override
@@ -129,11 +126,10 @@ public class DetailFragment extends Fragment {
 			    sb1.append("</font>");
 			    sb1.append("</body></html>");
 			    //Cross-checking if content is correct or not.
-			    //Checking if htmlString has blogs html data*/
+			    //Checking if htmlString has blog's html data
 			    Log.v(TAG,"Blog is:"+htmlString);
 					
-			   // Log.v(TAG,"Blog content is:"+blogs.toString());
-			    
+			  
 			return null;
 		}
 		

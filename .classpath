@@ -5,5 +5,7 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
+	<classpathentry kind="lib" path="/Users/user/Desktop/Disk Image New Installs/Android:IOS app work/GoogleAnalyticsServicesAndroid_3.02/libGoogleAnalyticsServices.jar"/>
+	<classpathentry kind="lib" path="/Users/user/Downloads/clicktracker-1/libs/libGoogleAnalytics.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

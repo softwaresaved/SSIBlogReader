@@ -1,6 +1,15 @@
 package uk.software.blogreader;
 
+import java.util.HashMap;
+
+import com.google.android.apps.analytics.GoogleAnalyticsTracker;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.google.analytics.tracking.android.EasyTracker;
+
 import uk.software.blogreader.R;
+
 import uk.software.blogreader.image.*;
 import uk.software.parser.*;
 
@@ -28,12 +37,36 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class ListActivity extends Activity {
+	
 	Application myApp;
 	RSSFeed feed;
 	ListView lv;
 	CustomListAdapter adapter;
 	String Uri = null;
 	private static final String TAG = "MyActivity";
+	GoogleAnalyticsTracker tracker;
+
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onStart()
+	 */
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		EasyTracker.getInstance(this).activityStart(this);
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onStop()
+	 */
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
+		EasyTracker.getInstance(this).activityStop(this);
+	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
@@ -69,15 +102,26 @@ public class ListActivity extends Activity {
 		// Set an Adapter to the ListView
 		adapter = new CustomListAdapter(this);
 		lv.setAdapter(adapter);
-
+	
+		// Start your statistics tracking
+        tracker = GoogleAnalyticsTracker.getInstance();     
+      
+        //tracker.start("UA-46208653-1", this); // Start the tracker in manual dispatch mode.
+        tracker.start("UA-46208653-1", 30, this);   //Tracker started  with a dispatch interval of 5 seconds for real-time tracking
+		tracker.trackPageView("/SSI Blog Page");
+		
 		// Set on item click listener to the ListView
 		lv.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				// actions to be performed when a list item clicked
+				
 				int pos = arg2;
+
+				// actions to be performed when a list item clicked
+			    tracker.trackPageView(feed.getItem(pos).getLink());   
+		        tracker.trackEvent("Clicks","ListItem", "Blog Clicked", 0);
 
 				Bundle bundle = new Bundle();
 				bundle.putSerializable("feed", feed);
@@ -86,7 +130,7 @@ public class ListActivity extends Activity {
 				intent.putExtras(bundle);
 				intent.putExtra("pos", pos);
 				startActivity(intent);
-
+				
 			}
 		});
 		//Show up button in the action bar.
@@ -106,6 +150,9 @@ public class ListActivity extends Activity {
 		super.onDestroy();
 		adapter.imageLoader.clearCache();
 		adapter.notifyDataSetChanged();
+		
+		tracker.dispatch();
+		tracker.stop();
 	}
 
 	class CustomListAdapter extends BaseAdapter {
@@ -166,37 +213,17 @@ public class ListActivity extends Activity {
 			// Set the views in the layout
 			if( (feed.getItem(pos).getImage() == null) && (Uri != null)){
 				
-				//File sdcard = Environment.getExternalStorageDirectory();
-	            //File file = new File(sdcard,"VID_20130922_130050.mp4");
-	            //FileOutputStream out;
-	            //MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-	            //Bitmap thumbnail = retriever.getFrameAtTime((int)(33*10),MediaMetadataRetriever.OPTION_CLOSEST);
+				
 			Bitmap thumbnail = ThumbnailUtils.createVideoThumbnail(feed.getItem(pos).getVideo(),MediaStore.Video.Thumbnails.MICRO_KIND);
 		    Matrix matrix = new Matrix();
 		   
 			if(thumbnail != null){
-				 //try{
+			
 			   Bitmap bitmap = Bitmap.createBitmap(thumbnail, 0, 0,
 				            thumbnail.getWidth(), thumbnail.getHeight(), matrix, true);
-			   //ByteArrayOutputStream stream = new ByteArrayOutputStream();
-			   //retriever.setDataSource(file.getAbsolutePath());
-			 
-               //thumbnail.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-               //byte[] byteArray = stream.toByteArray();
-               
-               //out = new FileOutputStream(file.getPath());
-             //  try {
-				//out.write(byteArray);
-		//	} catch (IOException e) {
-				// TODO Auto-generated catch block
-			//	e.printStackTrace();
-		//	}
+		
                iv.setImageBitmap(bitmap);
-            		   //thumbnail.createScaledBitmap(thumbnail, 300, 300, false));
-				// }
-				// catch(FileNotFoundException e){
-				//	 e.printStackTrace();
-				 //}
+            
 			}
 			 else{
 				 imageLoader.DisplayImage(feed.getItem(pos).getImage(), iv);

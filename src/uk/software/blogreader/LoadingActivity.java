@@ -6,6 +6,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.HashMap;
+
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
 
 import uk.software.parser.DOMParser;
 import uk.software.parser.RSSFeed;
@@ -33,12 +37,14 @@ public class LoadingActivity extends Activity{
 	String htmlString;
 	String fileName;
 	
+	
 	//Progress Bar Functionality
 		private ProgressBar mProgress;
 		private int mProgressStatus=0;
 		private Handler mHandler = new Handler();
 		private TextView textView;	
 		
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub

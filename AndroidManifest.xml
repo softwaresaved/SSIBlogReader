@@ -14,8 +14,14 @@
     
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ssiappicon">
+        android:icon="@drawable/ssiappicon"
+        android:name="MyApplication">
         
+        <meta-data android:name="com.google.android.gms.version" 
+                   android:value="@integer/google_play_services_version" /> 
+        
+        <meta-data android:name="com.google.android.gms.analytics.globalConfigResource"
+                   android:value="@xml/global_tracker"/>     
         <activity 
             android:icon="@drawable/ssiappicon"
             android:name=".MainActivity"
@@ -36,8 +42,8 @@
             android:theme="@style/CustomTheme"
             android:parentActivityName=".MainActivity"
             android:launchMode="singleTop">
-           
-            <meta-data
+       
+       <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
             
@@ -46,7 +52,9 @@
              </intent-filter>  
 
         </activity>
-        <activity android:name=".ListActivity" 
+        
+        <activity 
+                  android:name=".ListActivity" 
                   android:theme="@style/ListTheme"
                   android:label="@string/title_activity_list" android:textColor="@color/white1" android:background="@color/ssicolor"
                   android:layout_gravity="center"
@@ -77,9 +85,6 @@
              </intent-filter>  
         
         </activity>
-        
-        
-        
         
     </application>
 

@@ -15,6 +15,23 @@
 # If your project uses WebView with JS, uncomment the following
 # and specify the fully qualified class name to the JavaScript interface
 # class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
+#-keepClassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-keep class * extends java.util.ListResourceBundle {
+    protected Object[][] getContents();
+}
+
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+
+-keepNames @com.google.android.gms.common.annotation.KeepName class *
+-keepClassmembernames class * {
+    @com.google.android.gms.common.annotation.KeepName *;
+}
+
+-keepNames class * implements android.os.Parcelable {
+    public static final ** CREATOR;
+}
+

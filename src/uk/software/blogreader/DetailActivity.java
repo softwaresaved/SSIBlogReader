@@ -1,5 +1,12 @@
 package uk.software.blogreader;
 
+import com.google.analytics.tracking.android.Fields;
+import com.google.android.apps.analytics.GoogleAnalyticsTracker;
+
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import uk.software.parser.*;
 import uk.software.blogreader.R;
 import android.app.ActionBar;
@@ -15,10 +22,12 @@ import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 
 public class DetailActivity extends FragmentActivity{
+	
 	RSSFeed feed;
 	int pos;
 	private DescAdapter adapter;
 	private ViewPager pager;
+	GoogleAnalyticsTracker tracker;
 
 	@Override
 	public void onBackPressed() {
@@ -44,6 +53,7 @@ public class DetailActivity extends FragmentActivity{
 	    finish();
 		return super.onOptionsItemSelected(item);
 	}
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,15 +71,29 @@ public class DetailActivity extends FragmentActivity{
 		// Set Adapter to pager:
 		pager.setAdapter(adapter);
 		pager.setCurrentItem(pos);
+		 
+		ActionBar actionBar = getActionBar();
+	    actionBar.setDisplayHomeAsUpEnabled(true);
+
+	  	// Show the Up button in the action bar.
+	  	setupActionBar();
+			
+	    //Get a tracker (should auto-report) for sending a screen view
+		//Tracker t = ((MyApplication) getApplication()).getTracker(MyApplication.TrackerName.APP_TRACKER);
+		//t.send(new HitBuilders.AppViewBuilder().build());
+	  	Tracker t = GoogleAnalytics.getInstance(getApplicationContext()).newTracker("UA-46208653-1");
+	  	t.set(Fields.SCREEN_NAME, "DetailActivity");
+	  	t.send(new HitBuilders.EventBuilder().setCategory("UA").setAction("click").setLabel(feed.getItem(pos).getLink()).build());
 		
-		   ActionBar actionBar = getActionBar();
-	       actionBar.setDisplayHomeAsUpEnabled(true);
-
-	  	  // Show the Up button in the action bar.
-	  	  setupActionBar();
-
-
+		//Send Statistics tracking
+		 tracker = GoogleAnalyticsTracker.getInstance();     
+	      
+	     //tracker.start("UA-46208653-1", this); // Start the tracker in manual dispatch mode.
+	     tracker.start("UA-46208653-1", 30, this);   //Tracker started  with a default dispatch interval of 30 seconds.
+	     tracker.trackPageView("/SSI Blog Page");
+	     
 	}
+	
 	
 	public class DescAdapter extends FragmentStatePagerAdapter {
 		public DescAdapter(FragmentManager fm) {
@@ -104,7 +128,4 @@ public class DetailActivity extends FragmentActivity{
 		
 	}
 	}
-
-
-
 }
