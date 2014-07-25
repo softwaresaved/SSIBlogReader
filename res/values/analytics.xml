@@ -10,8 +10,5 @@ tools:ignore="TypographyDashes">
 
   <!--Enable automatic exception tracking-->
   <bool name="ga_reportUncaughtExceptions">true</bool>
-  
-  <!-- Setting Dispatch period -->
-  <integer name="ga_dispatchPeriod">30</integer>
     
 </resources>

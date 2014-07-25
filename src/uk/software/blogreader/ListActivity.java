@@ -7,6 +7,7 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.MapBuilder;
 
 import uk.software.blogreader.R;
 
@@ -44,8 +45,9 @@ public class ListActivity extends Activity {
 	CustomListAdapter adapter;
 	String Uri = null;
 	private static final String TAG = "MyActivity";
-	GoogleAnalyticsTracker tracker;
-
+	GoogleAnalyticsTracker tracker; //Using GA Tracker
+    private EasyTracker easyTracker = null; //Using Easy Tracker
+    
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onStart()
 	 */
@@ -90,6 +92,8 @@ public class ListActivity extends Activity {
 
 		setContentView(R.layout.feed_list);
 
+		easyTracker = EasyTracker.getInstance(ListActivity.this);
+		
 		myApp = getApplication();
 
 		// Get feed form the file
@@ -122,6 +126,8 @@ public class ListActivity extends Activity {
 				// actions to be performed when a list item clicked
 			    tracker.trackPageView(feed.getItem(pos).getLink());   
 		        tracker.trackEvent("Clicks","ListItem", "Blog Clicked", 0);
+		        
+		        easyTracker.send(MapBuilder.createEvent("Click", "List Item Clicked", feed.getItem(pos).getLink(), null).build());
 
 				Bundle bundle = new Bundle();
 				bundle.putSerializable("feed", feed);

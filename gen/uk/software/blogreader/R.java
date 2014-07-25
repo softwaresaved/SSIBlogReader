@@ -455,9 +455,6 @@ containing a value of this type.
         public static final int wrap_content=0x7f08000d;
     }
     public static final class integer {
-        /**  Setting Dispatch period 
-         */
-        public static final int ga_dispatchPeriod=0x7f090001;
         public static final int google_play_services_version=0x7f090000;
     }
     public static final class layout {

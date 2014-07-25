@@ -139,7 +139,6 @@ int id textview1 0x7f080015
 int id thumb 0x7f08001f
 int id title 0x7f08001b
 int id wrap_content 0x7f08000d
-int integer ga_dispatchPeriod 0x7f090001
 int integer google_play_services_version 0x7f090000
 int layout activity_display_blogs_list 0x7f030000
 int layout activity_main 0x7f030001

@@ -111,16 +111,14 @@ public class DetailFragment extends Fragment {
 				//htmlDoc.getElementsByTag("div.content");
 				
 				sb1 = new StringBuilder();
-				
+
 				//Checking if CSS Style sheet created and included locally would work.
 				sb1.append("<html>");
 				sb1.append("<head>");
 				sb1.append("<link rel=stylesheet href='css/SSIStyle.css'>");
 				sb1.append("</head>");
 				sb1.append("<body>");
-			    //sb1.append("<html><head><link href=\"file:///android_asset/css/SSIStyle.css\" type=\"text/css\" rel=\"stylesheet\"/></HEAD><body>");
-			    //sb1.append("<p><img src=fFeed.getItem(fPos).getImage()</p>");
-			    sb1.append(blogs.html());
+			    sb1.append(blogs.html().toString().replaceAll("&nbsp;", ""));
 			    sb1.append("<font color=#999999>");
 			    sb1.append(writer.text());
 			    sb1.append("</font>");

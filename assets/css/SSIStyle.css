@@ -147,11 +147,12 @@ body
   margin-bottom: 0px;
 }
 
-#img{
-  
-}
 #submitted{
   color: #999999;
+}
+
+#img{
+  max-width: 100%;
 }
 
 /* Customised Hyperlink text color to SSI red colour */
@@ -166,3 +167,12 @@ a:link    { color: #D2232A}
     margin-bottom: 6px;
     width: 100%;
 }
+
+img{
+    max-width: 100%;
+  }
+
+
+
+
+
