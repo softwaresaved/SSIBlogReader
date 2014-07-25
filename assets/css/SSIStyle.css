@@ -153,6 +153,7 @@ body
 
 #img{
   max-width: 100%;
+  height: auto;
 }
 
 /* Customised Hyperlink text color to SSI red colour */
@@ -170,6 +171,7 @@ a:link    { color: #D2232A}
 
 img{
     max-width: 100%;
+    height: auto;
   }
 
 
