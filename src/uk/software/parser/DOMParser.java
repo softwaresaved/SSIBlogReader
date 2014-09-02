@@ -11,6 +11,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -20,6 +21,38 @@ import org.xml.sax.InputSource;
 public class DOMParser {
 	private RSSFeed _feed = new RSSFeed();
 	private String htmlBlog = new String();
+	String htmlString;
+	private static StringBuilder sb1;
+
+	 public String parseHtml(String link){
+			
+			URL blogURL = null;
+			try {
+				blogURL = new URL(link);
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			try {
+				InputStream is = (InputStream) blogURL.getContent();
+				BufferedReader br = new BufferedReader(new InputStreamReader(is));
+				String line = null;
+				StringBuffer sb = new StringBuffer();
+				
+				while((line = br.readLine()) != null){
+					   sb.append(line);
+					 }
+					 htmlBlog = sb.toString();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			return htmlBlog;
+			
+		}
 
 	public RSSFeed parseXml(String xml) {
 
@@ -44,7 +77,7 @@ public class DOMParser {
 			NodeList nl = doc.getElementsByTagName("item");
 			int length = nl.getLength();
 
-			for (int i = 0; i < 200; i++) {
+			for (int i = 0; i < 30; i++) {
 				Node currentNode = nl.item(i);
 				RSSItem _item = new RSSItem();
 
@@ -67,8 +100,44 @@ public class DOMParser {
 							_item.setTitle(theString);
 						}
 
-						else if ("description".equals(nodeName)) {
-							_item.setDescription(theString);
+						else if("link".equals(nodeName)){
+							htmlString = parseHtml(theString);
+							_item.setLink(theString);
+							
+						}
+
+						else if ("pubDate".equals(nodeName)) {
+
+							// We replace the plus and zero's in the date with
+							// empty string
+							String formatedDate = theString.replace(" +0000",
+									"");
+							_item.setDate(formatedDate);
+						}
+						
+                        else if ("description".equals(nodeName)) {
+							
+							//Parse the html description to get blog content without 'Read More'	
+						    org.jsoup.nodes.Document htmlDoc = Jsoup.parse(htmlString);
+							
+							Element blogs = htmlDoc.select("div[class=content]").first();
+							
+							Elements writer = htmlDoc.body().getElementsByAttributeValue("class", "submitted");
+							sb1 = new StringBuilder();
+
+							//Checking if CSS Style sheet created and included locally would work.
+							sb1.append("<html>");
+							sb1.append("<head>");
+							sb1.append("<link rel=stylesheet href='css/SSIStyle.css'>");
+							sb1.append("</head>");
+							sb1.append("<body>");
+						    sb1.append(blogs.html().toString().replaceAll("&nbsp;", ""));
+						    sb1.append("<font color=#999999>");
+						    sb1.append(writer.text());
+						    sb1.append("</font>");
+						    sb1.append("</body></html>");
+						    
+							_item.setDescription(sb1.toString());
 
 							// Parse the html description to get the image url
 							String html = theString;
@@ -84,19 +153,6 @@ public class DOMParser {
 							    _item.setImage(imgEle.attr("src"));
 						}
 						
-						else if("link".equals(nodeName)){
-							
-							_item.setLink(theString);
-						}
-
-						else if ("pubDate".equals(nodeName)) {
-
-							// We replace the plus and zero's in the date with
-							// empty string
-							String formatedDate = theString.replace(" +0000",
-									"");
-							_item.setDate(formatedDate);
-						}
 
 					}
 				}
@@ -113,35 +169,5 @@ public class DOMParser {
 		return _feed;
 	}
 
-    public String parseHtml(String link){
-		
-		URL blogURL = null;
-		try {
-			blogURL = new URL(link);
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		try {
-			InputStream is = (InputStream) blogURL.getContent();
-			BufferedReader br = new BufferedReader(new InputStreamReader(is));
-			String line = null;
-			StringBuffer sb = new StringBuffer();
-			
-			while((line = br.readLine()) != null){
-				   sb.append(line);
-				 }
-				 htmlBlog = sb.toString();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		return htmlBlog;
-		
-	}
-
-
+   
 }

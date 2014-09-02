@@ -11,7 +11,7 @@
 		android:layout_centerHorizontal="true"
 		android:layout_centerVertical="true"
 		android:contentDescription="@string/app_name"
-		android:src="@drawable/ssiappicon"/>
+		android:src="@drawable/ssiloading"/>
 
 </RelativeLayout>	
 		

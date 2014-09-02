@@ -74,11 +74,9 @@ public class DetailFragment extends Fragment {
 		
 		//Extracting part of SSI blog html page through Jsoup in AsyncLoadLinkFeed thread
 		
-		new AsyncLoadLinkFeed().execute();
+		//new AsyncLoadLinkFeed().execute();
 	
-		//desc.loadDataWithBaseURL("file:///android_asset/",htmlString, "text/html", "UTF-8", null);
-        //http://www.androidcentral.com/
-		//fFeed.getItem(fPos).getDescription()
+		desc.loadDataWithBaseURL("file:///android_asset/",fFeed.getItem(fPos).getDescription(), "text/html", "UTF-8", null );
 		
 		return view;
 	}

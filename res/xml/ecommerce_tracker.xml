@@ -2,5 +2,5 @@
 <resources>
     <integer name="ga_sessionTimeout">300</integer>
     <!--  The following value should be replaced with correct property id. -->
-    <string name="ga_trackingId">UA-46208653-1</string>
+    <string name="ga_trackingId">UA-46208653-2</string>
 </resources>

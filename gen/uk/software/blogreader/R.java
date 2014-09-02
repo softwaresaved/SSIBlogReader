@@ -418,6 +418,11 @@ containing a value of this type.
         public static final int powered_by_google_light=0x7f02001f;
         public static final int progress_bar=0x7f020020;
         public static final int ssiappicon=0x7f020021;
+        public static final int ssibloglistcopy=0x7f020022;
+        public static final int ssiicon=0x7f020023;
+        public static final int ssiicon480=0x7f020024;
+        public static final int ssiiconhighres=0x7f020025;
+        public static final int ssiloading=0x7f020026;
     }
     public static final class id {
         public static final int book_now=0x7f080010;
