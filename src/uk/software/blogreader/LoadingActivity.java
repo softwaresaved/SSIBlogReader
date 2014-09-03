@@ -38,7 +38,6 @@ import android.widget.Toast;
 public class LoadingActivity extends Activity{
 	private String RSSFEEDURL = "http://www.software.ac.uk/blog/rss-all";
 	RSSFeed feed;
-	String htmlString;
 	String fileName;
 	
 	

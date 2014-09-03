@@ -210,16 +210,16 @@ public class ListActivity extends Activity {
 
 			Log.v(TAG, "Image Link is:"+feed.getItem(pos).getImage());
 			
-			if (feed.getItem(pos).getVideo() != null)
+			/*if (feed.getItem(pos).getVideo() != null)
 			{
 			  Uri = "http:"+feed.getItem(pos).getVideo();
 			  Log.v(TAG,"Video link is:"+Uri);
 			}
 			else
-				Uri = feed.getItem(pos).getVideo();
+				Uri = feed.getItem(pos).getVideo();*/
 			
 			// Set the views in the layout
-			if( (feed.getItem(pos).getImage() == null) && (Uri != null)){
+			/*if( (feed.getItem(pos).getImage() == null) && (Uri != null)){
 				
 				
 			Bitmap thumbnail = ThumbnailUtils.createVideoThumbnail(feed.getItem(pos).getVideo(),MediaStore.Video.Thumbnails.MICRO_KIND);
@@ -241,10 +241,13 @@ public class ListActivity extends Activity {
 				
 			 if( (feed.getItem(pos).getImage() != null) && (Uri == null))	
 			    imageLoader.DisplayImage(feed.getItem(pos).getImage(), iv);
-			}
+			}*/
+			
+			imageLoader.DisplayImage(feed.getItem(pos).getImage(), iv);
+		
 			tvTitle.setText(feed.getItem(pos).getTitle());
 			tvDate.setText(feed.getItem(pos).getDate().substring(4, 16));
-
+            
 			return listItem;
 		}
 

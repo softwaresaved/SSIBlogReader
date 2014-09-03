@@ -121,6 +121,7 @@ public class DOMParser {
 						    org.jsoup.nodes.Document htmlDoc = Jsoup.parse(htmlString);
 							
 							Element blogs = htmlDoc.select("div[class=content]").first();
+							Elements imgs = htmlDoc.select("img");
 							
 							Elements writer = htmlDoc.body().getElementsByAttributeValue("class", "submitted");
 							sb1 = new StringBuilder();
@@ -148,10 +149,14 @@ public class DOMParser {
 							if(imgEle.isEmpty()){
 								imgEle = docHtml.select("iframe");
 							    _item.setVideo(imgEle.attr("src"));
+							    
 							}
 						    else
+						    	imgEle.removeAttr("style");
 							    _item.setImage(imgEle.attr("src"));
+							   
 						}
+						   
 						
 
 					}
