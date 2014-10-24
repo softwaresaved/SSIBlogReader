@@ -16,6 +16,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import android.app.Activity;
+import android.os.Handler;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -29,6 +30,7 @@ public class ImageLoader {
 	private Map<ImageView, String> imageViews = Collections
 			.synchronizedMap(new WeakHashMap<ImageView, String>());
 	ExecutorService executorService;
+	Handler handler = new Handler(); //handler to display images in UI thread
 
 	public ImageLoader(Context context) {
 		fileCache = new FileCache(context);
@@ -151,6 +153,7 @@ public class ImageLoader {
 				BitmapDisplayer bd = new BitmapDisplayer(bmp, photoToLoad);
 				Activity a = (Activity) photoToLoad.imageView.getContext();
 				a.runOnUiThread(bd);
+				//handler.post(bd);
 			} catch (Throwable th) {
 				th.printStackTrace();
 			}

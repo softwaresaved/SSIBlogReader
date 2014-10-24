@@ -8,6 +8,7 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.MapBuilder;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import uk.software.blogreader.R;
 
@@ -91,7 +92,6 @@ public class ListActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.feed_list);
-
 		//easyTracker = EasyTracker.getInstance(ListActivity.this);
 		
 		myApp = getApplication();
@@ -156,9 +156,7 @@ public class ListActivity extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		adapter.imageLoader.clearCache();
-		adapter.notifyDataSetChanged();
-		
+		adapter.notifyDataSetChanged();		
 		//tracker.dispatch();
 		//tracker.stop();
 	}
@@ -204,6 +202,7 @@ public class ListActivity extends Activity {
 
 			// Initialize the views in the layout
 			ImageView iv = (ImageView) listItem.findViewById(R.id.thumb);
+			
 			// set the ImageView opacity to 50%
 			TextView tvTitle = (TextView) listItem.findViewById(R.id.title);
 			TextView tvDate = (TextView) listItem.findViewById(R.id.date);
@@ -244,6 +243,7 @@ public class ListActivity extends Activity {
 			}*/
 			
 			imageLoader.DisplayImage(feed.getItem(pos).getImage(), iv);
+			
 		
 			tvTitle.setText(feed.getItem(pos).getTitle());
 			tvDate.setText(feed.getItem(pos).getDate().substring(4, 16));

@@ -1,5 +1,6 @@
 package uk.software.parser;
 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,11 +19,16 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+import uk.software.blogreader.image.ImageLoader;
+
+import com.google.android.gms.drive.internal.s;
+
 public class DOMParser {
 	private RSSFeed _feed = new RSSFeed();
 	private String htmlBlog = new String();
 	String htmlString;
 	private static StringBuilder sb1;
+	public ImageLoader imageLoader;
 
 	 public String parseHtml(String link){
 			
@@ -119,11 +125,14 @@ public class DOMParser {
 							
 							//Parse the html description to get blog content without 'Read More'	
 						    org.jsoup.nodes.Document htmlDoc = Jsoup.parse(htmlString);
-							
+							 
 							Element blogs = htmlDoc.select("div[class=content]").first();
-							Elements imgs = htmlDoc.select("img");
 							
 							Elements writer = htmlDoc.body().getElementsByAttributeValue("class", "submitted");
+							
+						   //For image element of main image in blog post
+							Element pngs = blogs.select("img").first();
+							
 							sb1 = new StringBuilder();
 
 							//Checking if CSS Style sheet created and included locally would work.
@@ -132,6 +141,7 @@ public class DOMParser {
 							sb1.append("<link rel=stylesheet href='css/SSIStyle.css'>");
 							sb1.append("</head>");
 							sb1.append("<body>");
+							pngs.remove(); //Removing main blog image from the webview content
 						    sb1.append(blogs.html().toString().replaceAll("&nbsp;", ""));
 						    sb1.append("<font color=#999999>");
 						    sb1.append(writer.text());
@@ -145,7 +155,7 @@ public class DOMParser {
 							org.jsoup.nodes.Document docHtml = Jsoup
 									.parse(html);
 							Elements imgEle = docHtml.select("img");
-							
+						
 							if(imgEle.isEmpty()){
 								imgEle = docHtml.select("iframe");
 							    _item.setVideo(imgEle.attr("src"));

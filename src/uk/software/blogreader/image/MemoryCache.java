@@ -18,8 +18,8 @@ public class MemoryCache {
     private long limit=1000000;//max memory in bytes
 
     public MemoryCache(){
-        //use 25% of available heap size
-        setLimit(Runtime.getRuntime().maxMemory()/4);
+        //use 25% of available heap size "/4" or 12.5% of available heap size "/8"
+        setLimit(Runtime.getRuntime().maxMemory()/8);
     }
     
     public void setLimit(long new_limit){
