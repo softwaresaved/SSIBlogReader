@@ -430,14 +430,17 @@ containing a value of this type.
         public static final int buy_now=0x7f08000f;
         public static final int buy_with_google=0x7f08000e;
         public static final int classic=0x7f080011;
-        public static final int date=0x7f080021;
+        public static final int date=0x7f080024;
         public static final int desc=0x7f08001e;
+        public static final int fullimage=0x7f080021;
         public static final int grayscale=0x7f080012;
         public static final int holo_dark=0x7f080005;
         public static final int holo_light=0x7f080006;
         public static final int hybrid=0x7f080004;
         public static final int imageView=0x7f080016;
+        public static final int imagepop_placename=0x7f080022;
         public static final int iv=0x7f08001d;
+        public static final int layout_root=0x7f080020;
         public static final int linearLayout1=0x7f080017;
         public static final int listView=0x7f08001f;
         public static final int match_parent=0x7f08000c;
@@ -456,7 +459,7 @@ containing a value of this type.
         public static final int terrain=0x7f080003;
         public static final int textView=0x7f080019;
         public static final int textview1=0x7f080015;
-        public static final int thumb=0x7f080020;
+        public static final int thumb=0x7f080023;
         public static final int title=0x7f08001b;
         public static final int wrap_content=0x7f08000d;
     }
@@ -469,7 +472,8 @@ containing a value of this type.
         public static final int detail=0x7f030002;
         public static final int detail_fragment=0x7f030003;
         public static final int feed_list=0x7f030004;
-        public static final int list_item=0x7f030005;
+        public static final int imagepop=0x7f030005;
+        public static final int list_item=0x7f030006;
     }
     public static final class string {
         public static final int app_name=0x7f060021;
@@ -479,6 +483,7 @@ containing a value of this type.
         public static final int auth_client_play_services_err_notification_msg=0x7f060004;
         public static final int auth_client_requested_by_msg=0x7f060005;
         public static final int auth_client_using_bad_version_title=0x7f060000;
+        public static final int close=0x7f060027;
         /**  Button in confirmation dialog to enable Google Play services.  Clicking it
         will direct user to application settings of Google Play services where they
         can enable it [CHAR LIMIT=40] 

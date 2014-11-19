@@ -242,7 +242,7 @@ public class ListActivity extends Activity {
 			    imageLoader.DisplayImage(feed.getItem(pos).getImage(), iv);
 			}*/
 			
-			imageLoader.DisplayImage(feed.getItem(pos).getImage(), iv);
+			imageLoader.DisplayImage(feed.getItem(pos).getImage(), iv, iv.getMeasuredWidth(), iv.getMeasuredHeight());
 			
 		
 			tvTitle.setText(feed.getItem(pos).getTitle());

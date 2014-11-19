@@ -132,6 +132,8 @@ public class DOMParser {
 							
 						   //For image element of main image in blog post
 							Element pngs = blogs.select("img").first();
+							Elements eleImg = htmlDoc.select("img");
+							
 							
 							sb1 = new StringBuilder();
 
@@ -141,7 +143,8 @@ public class DOMParser {
 							sb1.append("<link rel=stylesheet href='css/SSIStyle.css'>");
 							sb1.append("</head>");
 							sb1.append("<body>");
-							pngs.remove(); //Removing main blog image from the webview content
+							pngs.remove(); //Removing main blog image from the webview content.
+							eleImg.attr("style", "height:300px; width:400px");
 						    sb1.append(blogs.html().toString().replaceAll("&nbsp;", ""));
 						    sb1.append("<font color=#999999>");
 						    sb1.append(writer.text());

@@ -20,6 +20,8 @@ import android.os.Handler;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.RectF;
 import android.widget.ImageView;
 import uk.software.blogreader.R;
 
@@ -38,8 +40,13 @@ public class ImageLoader {
 	}
 
 	final int stub_id = R.drawable.images;
+	int dstWidth = 0;
+	int dstHeight = 0;
 
-	public void DisplayImage(String url, ImageView imageView) {
+	public void DisplayImage(String url, ImageView imageView,int iv_width, int iv_height) {
+		
+		dstWidth = iv_width;
+		dstHeight = iv_height;
 		imageViews.put(imageView, url);
 		Bitmap bitmap = memoryCache.get(url);
 		if (bitmap != null)
@@ -89,17 +96,24 @@ public class ImageLoader {
 	// decodes image and scales it to reduce memory consumption
 	private Bitmap decodeFile(File f) {
 		try {
-			// decode image size
+			int width_tmp = 0;
+			int height_tmp = 0;
+			
+			// decode image size/ get source Image's dimensions
 			BitmapFactory.Options o = new BitmapFactory.Options();
 			o.inJustDecodeBounds = true;
 			FileInputStream stream1 = new FileInputStream(f);
 			BitmapFactory.decodeStream(stream1, null, o);
 			stream1.close();
-
+ 
 			// Find the correct scale value. It should be the power of 2.
-			final int REQUIRED_SIZE = 70;
-			int width_tmp = o.outWidth, height_tmp = o.outHeight;
-			int scale = 1;
+			//final int REQUIRED_SIZE = 70;
+			
+			//Save width and height
+			width_tmp = o.outWidth;
+			height_tmp = o.outHeight;
+			
+			/*int scale = 1;
 			while (true) {
 				if (width_tmp / 2 < REQUIRED_SIZE
 						|| height_tmp / 2 < REQUIRED_SIZE)
@@ -107,15 +121,34 @@ public class ImageLoader {
 				width_tmp /= 2;
 				height_tmp /= 2;
 				scale *= 2;
-			}
+			}*/
 
-			// decode with inSampleSize
+			// decode full image pre-resized with inSampleSize
 			BitmapFactory.Options o2 = new BitmapFactory.Options();
-			o2.inSampleSize = scale;
+			o2.inJustDecodeBounds = false;
+			o2.inDither = false;
+			//o2.inSampleSize = scale;
+			o2.inSampleSize = Math.max(width_tmp/dstWidth, height_tmp/dstHeight);
+			o2.inScaled = false;
+			o2.inPreferredConfig = Bitmap.Config.ARGB_8888;
 			FileInputStream stream2 = new FileInputStream(f);
+			
+			//decode full image
 			Bitmap bitmap = BitmapFactory.decodeStream(stream2, null, o2);
+			
+			//Calculate exact destination size
+			Matrix m = new Matrix();
+			RectF inRect = new RectF(0,0, bitmap.getWidth(),bitmap.getHeight());
+			RectF outRect = new RectF(0,0, dstWidth,dstHeight);
+			m.setRectToRect(inRect, outRect, Matrix.ScaleToFit.CENTER);
+			float[] values = new float[9];
+			m.getValues(values);
+			
+			//resize bitmap
+			Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, (int) (bitmap.getWidth() * values[0]), (int) (bitmap.getHeight() * values[4]), true);
+			
 			stream2.close();
-			return bitmap;
+			return resizedBitmap;
 		} catch (FileNotFoundException e) {
 		} catch (IOException e) {
 			e.printStackTrace();
